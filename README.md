@@ -40,7 +40,7 @@ Its primary goal is to make the connection between **equations, code, and empiri
 
 ## Quickstart
 
-### Installation
+### Clone this repository
 
 ```bash
 git clone https://github.com/leedh/rl-playground.git
@@ -48,11 +48,60 @@ cd rl-playground
 pip install -e .
 ```
 
-(Optional) Development setup:
+---
+
+### Virtual Environment & Dependency
+
+#### Conda environment
+```bash
+conda create -n rl-playground python=3.10 -y
+conda activate rl-playground
+# CPU only
+conda install pytorch -c pytorch -y
+# CUDA (e.g., CUDA 11.8)
+conda install pytorch pytorch-cuda=11.8 -c pytorch -c nvidia -y
+# Check installation for CUDA
+python - << 'EOF'
+import torch
+print(torch.__version__)
+print(torch.cuda.is_available())
+EOF
+```
+
+#### Install dependency
+```bash
+pip install -e ".[dev,viz,video]"
+# Check installation of packages
+python - << 'EOF'
+import gymnasium, torch, yaml, numpy
+print("OK")
+EOF
+```
+You can install the followings with the code above:
+- runtime dependencies
+- pytest / pre-commit
+- matplotlib
+- video recording dependencies
+
+**(Optional) Development setup:**
 
 ```bash
 pre-commit install
+
+# test
+pre-commit run --all-files
 ```
+
+Sanity check
+```bash
+pytest
+```
+Potential failure points:
+- Docstring compliance violation
+- Invalid documentation link path
+- training_mode mismatch
+
+Please fix according to the provided error message.
 
 ---
 
@@ -64,6 +113,9 @@ pre-commit install
 python -m rl.scripts.train \
   --config src/rl/configs/q_learning_cartpole.yaml
 ```
+Upon success, the console will:
+- Print `run_dir`
+- Create `experiments/results/CartPole-v1/q_learning/<timestamp>/`
 
 #### DQN (CartPole)
 
@@ -77,6 +129,17 @@ python -m rl.scripts.train \
 ```bash
 python -m rl.scripts.train \
   --config src/rl/configs/ppo_cartpole.yaml
+```
+Execution Artifacts:
+```
+experiments/results/
+└── CartPole-v1/
+    └── ppo/
+        └── 2024-xx-xx_xx-xx-xx/
+            ├── config.yaml
+            ├── metrics.csv
+            ├── latest.pt
+            └── checkpoints/
 ```
 
 #### Evaluate a Trained Agent
