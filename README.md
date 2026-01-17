@@ -43,8 +43,8 @@ Its primary goal is to make the connection between **equations, code, and empiri
 ### Clone this repository
 
 ```bash
-git clone https://github.com/leedh/rl-playground.git
-cd rl-playground
+git clone https://github.com/leedh/rl-codebook.git
+cd rl-codebook
 pip install -e .
 ```
 
@@ -54,8 +54,8 @@ pip install -e .
 
 #### Conda environment
 ```bash
-conda create -n rl-playground python=3.10 -y
-conda activate rl-playground
+conda create -n rl-codebook python=3.10 -y
+conda activate rl-codebook
 # CPU only
 conda install pytorch -c pytorch -y
 # CUDA (e.g., CUDA 11.8)
